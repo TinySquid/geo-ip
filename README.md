@@ -43,7 +43,7 @@ After cloning the repository and installing the required dependencies via npm or
 
 <!-- ### Mobile -->
 
-<hr /><br />
+<hr />
 
 ## Original Challenge
 
