@@ -5,6 +5,10 @@
  */
 
 module.exports = {
-  /* Your site config here */
-  plugins: [],
+  siteMetadata: {
+		title: "Geo IP",
+		siteUrl: "https://ts-geo-ip.netlify.app",
+		description: "Get location information from an IP address.",
+	},
+  plugins: ["gatsby-plugin-styled-components"],
 }
