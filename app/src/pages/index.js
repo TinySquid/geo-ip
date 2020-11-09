@@ -2,7 +2,7 @@
 import React from "react";
 
 // Global Layout
-import Layout from "../components/layout/Layout";
+import Layout from "../components/Layout/Layout";
 
 // SC
 import styled from "styled-components";
