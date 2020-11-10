@@ -19,10 +19,13 @@
     "babel-plugin-styled-components": "^1.11.1",
     "gatsby": "^2.24.79",
     "gatsby-plugin-react-helmet": "^3.3.14",
+    "gatsby-plugin-react-leaflet": "^2.0.13",
     "gatsby-plugin-styled-components": "^3.3.14",
+    "leaflet": "^1.7.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
+    "react-leaflet": "^3.0.2",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
