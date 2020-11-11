@@ -2,25 +2,14 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-// Gatsby
-import { useStaticQuery, graphql } from "gatsby";
+// Hooks
+import { useSiteMetadata } from "../../hooks/useSiteMetadata";
 
 // Style
 import "./normalize.css";
 
 export default function Layout({ children }) {
-  const query = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-          }
-        }
-      }
-    `
-  );
+  const site = useSiteMetadata();
 
   return (
     <>
@@ -28,11 +17,11 @@ export default function Layout({ children }) {
         htmlAttributes={{
           lang: "en",
         }}
-        title={query.site.siteMetadata.title}
+        title={site.title}
         meta={[
           {
             name: "description",
-            content: query.site.siteMetadata.description,
+            content: site.description,
           },
         ]}
       />
