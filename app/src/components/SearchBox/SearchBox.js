@@ -11,6 +11,11 @@ const SearchContainer = styled.div`
   align-items: center; // Fixes 2px height offset on submit button
 
   margin: 35px 0 50px 0;
+
+  // Mobile
+  @media (max-width: 760px) {
+    margin: 25px 0;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -26,6 +31,11 @@ const SearchInput = styled.input`
   border-radius: 10px 0 0 10px;
 
   min-width: 350px;
+
+  // Mobile
+  @media (max-width: 760px) {
+    min-width: 275px;
+  }
 `;
 
 const SearchButton = styled.button`

@@ -31,8 +31,16 @@ const Title = styled.h1`
   font-size: 32px;
   font-weight: 500;
   color: white;
+
   margin: 0;
   padding: 35px 0 0 0;
+
+  // Mobile
+  @media (max-width: 760px) {
+    font-size: 26px;
+
+    padding: 25px 0 0 0;
+  }
 `;
 
 export default function Home() {
