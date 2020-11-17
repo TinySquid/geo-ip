@@ -6,24 +6,15 @@ import { render, screen } from "@testing-library/react";
 import InfoPanel from "./InfoPanel";
 
 describe("InfoPanel", () => {
-  it(`Renders the 4 sections`, () => {
-    render(<InfoPanel />);
-
-    expect(screen.getByText(/^IP ADDRESS$/i)).toBeDefined();
-    expect(screen.getByText(/^LOCATION$/i)).toBeDefined();
-    expect(screen.getByText(/^TIMEZONE$/i)).toBeDefined();
-    expect(screen.getByText(/^ISP$/i)).toBeDefined();
-  });
-
-  it(`Renders data from props`, () => {
+  it(`Renders sections from props`, () => {
     render(
       <InfoPanel
-        data={{
-          ip: "192.212.174.101",
-          location: "Brooklyn, NY 10001",
-          timezone: "UTC -05:00",
-          isp: "SpaceX Starlink",
-        }}
+        data={[
+          { header: "ip address", text: "192.212.174.101" },
+          { header: "location", text: "Brooklyn, NY 10001" },
+          { header: "timezone", text: "UTC -05:00" },
+          { header: "isp", text: "SpaceX Starlink" },
+        ]}
       />
     );
 
