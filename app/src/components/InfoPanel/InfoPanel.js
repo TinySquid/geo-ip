@@ -9,8 +9,13 @@ const Panel = styled.div`
   flex-direction: row;
   justify-content: center;
 
+  position: relative;
+  z-index: 9999;
+
   width: 80%;
-  margin: 35px auto;
+  height: 150px;
+
+  margin: 50px auto;
 
   background: white;
   border-radius: 15px;
@@ -21,7 +26,7 @@ const PanelItem = styled.div`
   width: 25%;
   text-align: left;
 
-  margin: 30px 0;
+  margin: 35px 0;
   padding-left: 30px;
 
   border-right: 1px solid #cccccc;

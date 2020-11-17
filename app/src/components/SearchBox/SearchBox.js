@@ -10,7 +10,7 @@ const SearchContainer = styled.div`
   justify-content: center;
   align-items: center; // Fixes 2px height offset on submit button
 
-  margin: 25px 0 45px 0;
+  margin: 35px 0 50px 0;
 `;
 
 const SearchInput = styled.input`

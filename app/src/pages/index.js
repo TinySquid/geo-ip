@@ -16,12 +16,13 @@ import HeaderBackground from "../assets/pattern-bg.png";
 
 const Container = styled.div`
   text-align: center;
+  overflow-x: hidden; // Removes horiz scroll from background on resize
 `;
 
 const Header = styled.div`
   background-image: url(${HeaderBackground});
   background-color: #2f3fcf; // Fallback for no img
-  height: 30vh;
+  height: 300px;
   background-size: cover;
   background-repeat: no-repeat;
 `;
@@ -31,7 +32,7 @@ const Title = styled.h1`
   font-weight: 500;
   color: white;
   margin: 0;
-  padding: 30px 0 0 0;
+  padding: 35px 0 0 0;
 `;
 
 export default function Home() {
@@ -52,7 +53,7 @@ export default function Home() {
         </Header>
         <MapBox
           options={{
-            style: { height: "70vh", width: "100vw" },
+            style: { height: "calc(100vh - 300px)", width: "100vw" },
             center: [51.505, -0.09],
             zoom: 15,
             scrollWheelZoom: false,
@@ -66,10 +67,5 @@ export default function Home() {
         </MapBox>
       </Container>
     </Layout>
-    // <Layout>
-    // {/* <Container> */}
-    // <p>Hello World!</p>
-    // {/* </Container> */}
-    // {/* </Layout> */}
   );
 }
