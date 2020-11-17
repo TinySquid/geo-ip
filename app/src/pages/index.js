@@ -56,7 +56,8 @@ export default function Home() {
             style: { height: "calc(100vh - 300px)", width: "100vw" },
             center: [51.505, -0.09],
             zoom: 15,
-            scrollWheelZoom: false,
+            zoomControl: false,
+            scrollWheelZoom: true,
           }}
         >
           <Marker position={[51.505, -0.09]}>

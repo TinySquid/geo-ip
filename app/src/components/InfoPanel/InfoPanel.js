@@ -15,6 +15,8 @@ const Panel = styled.div`
   width: 80%;
   height: 150px;
 
+  min-width: 750px;
+
   margin: 50px auto;
 
   background: white;
@@ -27,7 +29,7 @@ const PanelItem = styled.div`
   text-align: left;
 
   margin: 35px 0;
-  padding-left: 30px;
+  padding: 0 20px 0 30px;
 
   border-right: 1px solid #cccccc;
 
@@ -49,6 +51,11 @@ const PanelItemText = styled.p`
   font-weight: 500;
   color: #2b2b2b;
   margin: 0;
+
+  // Keep layout clean til mobile layout switch
+  @media (max-width: 1100px) {
+    font-size: 20px;
+  }
 `;
 
 export default function InfoPanel({ data }) {
