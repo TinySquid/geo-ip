@@ -20,10 +20,10 @@ beforeEach(() => {
   });
 });
 
-describe("Index", () => {
-  it(`contains 'Hello World!' text`, () => {
+describe("App Page", () => {
+  it(`contains header text`, () => {
     render(<Home />);
 
-    expect(screen.getByText("Hello World!")).toBeDefined();
+    expect(screen.getByText("IP Address Tracker")).toBeDefined();
   });
 });
