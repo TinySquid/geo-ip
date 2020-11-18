@@ -202,7 +202,7 @@ export default function Home() {
     <Layout>
       <Container>
         <Header>
-          <Title>IP Address Tracker</Title>
+          <Title>IP Address Locator</Title>
           <SearchBox initialValue={localIp} />
           <InfoPanel data={searchResult.data} />
         </Header>
