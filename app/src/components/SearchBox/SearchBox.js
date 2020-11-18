@@ -65,10 +65,13 @@ const SearchButton = styled.button`
   }
 `;
 
-export default function SearchBox() {
+export default function SearchBox({ initialValue }) {
   return (
     <SearchContainer>
-      <SearchInput placeholder="Search for any IP address or domain" />
+      <SearchInput
+        placeholder="Search for any IP address or domain"
+        defaultValue={initialValue ? initialValue : ""}
+      />
       <SearchButton aria-label="Submit">{">"}</SearchButton>
     </SearchContainer>
   );
