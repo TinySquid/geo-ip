@@ -21,9 +21,39 @@ beforeEach(() => {
 });
 
 describe("App Page", () => {
-  it(`contains header text`, () => {
+  it(`contains proper header text`, () => {
     render(<Home />);
 
     expect(screen.getByText("IP Address Tracker")).toBeDefined();
+  });
+
+  it(`contains SearchBox`, () => {
+    render(<Home />);
+
+    // PLACEHOLDER text - so its specific to inputs in this page
+    expect(screen.getByPlaceholderText(/ip address/i)).toBeDefined();
+  });
+
+  it(`contains InfoPanel`, () => {
+    render(<Home />);
+
+    // IP section
+    expect(screen.getByText("192.212.174.101")).toBeDefined();
+
+    // Location
+    expect(screen.getByText("Brooklyn, NY 10001")).toBeDefined();
+
+    // Timezone
+    expect(screen.getByText("UTC -05:00")).toBeDefined();
+
+    // ISP
+    expect(screen.getByText("SpaceX Starlink")).toBeDefined();
+  });
+
+  it(`contains MapBox`, () => {
+    render(<Home />);
+
+    expect(screen.getByText("Leaflet")).toBeDefined();
+    expect(screen.getByText("OpenStreetMap")).toBeDefined();
   });
 });
