@@ -71,10 +71,6 @@ const PanelItemHeader = styled.h2`
   // Mobile
   @media (max-width: 760px) {
     margin-bottom: 5px;
-
-    // &:last-child {
-    //   margin-bottom: 25px;
-    // }
   }
 `;
 
