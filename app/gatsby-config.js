@@ -10,15 +10,5 @@ module.exports = {
     siteUrl: "https://ts-geo-ip.netlify.app",
     description: "Get location information from an IP address.",
   },
-  plugins: [
-    {
-      resolve: `gatsby-plugin-styled-components`,
-    },
-    {
-      resolve: `gatsby-plugin-react-leaflet`,
-      options: {
-        linkStyles: true,
-      },
-    },
-  ],
+  plugins: [`gatsby-plugin-styled-components`, `gatsby-plugin-react-leaflet`],
 };
