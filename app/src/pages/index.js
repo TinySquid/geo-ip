@@ -10,7 +10,6 @@ import Layout from "../components/Layout/Layout";
 import SearchBox from "../components/SearchBox/SearchBox";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import MapBox from "../components/MapBox/MapBox";
-import { Marker, Popup } from "react-leaflet";
 
 import { daysBetween } from "../utility/dateRange";
 
@@ -64,7 +63,7 @@ export default function Home() {
       I've setup this environment variable so you can change it, but by default I'm using https://www.cloudflare.com/cdn-cgi/trace
       The cloudflare endpoint returns a plain-text response and is subject to change at their will so a proxy backend would be better in this instance.
     */
-    return axios.get(process.env.GET_LOCAL_IP_ENDPOINT);
+    return axios.get(`${process.env.GET_LOCAL_IP_ENDPOINT}`);
   }
 
   async function getIpLocationData(localIp) {
@@ -79,7 +78,10 @@ export default function Home() {
 
     if (searchHistory) {
       // pre-existing cache
-      localStorage.setItem("cache", JSON.stringify([...searchHistory, search]));
+      localStorage.setItem(
+        "cache",
+        JSON.stringify([...JSON.parse(searchHistory), search])
+      );
     } else {
       // First store to cache
       localStorage.setItem("cache", JSON.stringify([search]));
@@ -87,8 +89,6 @@ export default function Home() {
   }
 
   function parseSearchResultFromAPI(data) {
-    console.log("Parsing from API");
-
     // parse for InfoPanel component to render
     /* Expected input to be object with keys:
       {
@@ -117,7 +117,7 @@ export default function Home() {
       coords: [data.location.lat, data.location.lng],
 
       // Used to decrease API usage
-      date: new Date().setHours(0, 0, 0, 0).toString(),
+      date: new Date().setHours(0, 0, 0, 0),
     };
 
     // Send to state
@@ -128,8 +128,6 @@ export default function Home() {
   }
 
   function parseSearchResultFromCache(cacheResult) {
-    console.log("Parsing from cache");
-
     // Cache already in correct format to be displayed
     _searchResultHelper(cacheResult);
   }
@@ -149,12 +147,15 @@ export default function Home() {
 
   // By default we want to get our local ip onMount
   useEffect(() => {
-    (async () => {
-      const { data } = await getLocalIpAddress();
+    // Gatsby build-time guard
+    if (typeof window !== "undefined" && window) {
+      (async () => {
+        const { data } = await getLocalIpAddress();
 
-      // Data comes back as plain-text so I parse by spliting & retrieving the ip by index before trimming the key off
-      setLocalIp(data.split("\n")[2].substring(3));
-    })();
+        // Data comes back as plain-text so I parse by spliting & retrieving the ip by index before trimming the key off
+        setLocalIp(data.split("\n")[2].substring(3));
+      })();
+    }
   }, []);
 
   // Will determine if we grab location data from cache or API
@@ -212,13 +213,7 @@ export default function Home() {
             zoomControl: false,
             scrollWheelZoom: true,
           }}
-        >
-          <Marker position={searchResult.coords}>
-            <Popup>
-              ~LAT {searchResult.coords[0]} | ~LON {searchResult.coords[1]}
-            </Popup>
-          </Marker>
-        </MapBox>
+        ></MapBox>
       </Container>
     </Layout>
   );
