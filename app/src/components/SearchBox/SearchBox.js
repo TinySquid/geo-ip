@@ -53,6 +53,16 @@ const SearchButton = styled.button`
 
   border: none;
   border-radius: 0 10px 10px 0;
+
+  &:hover,
+  :active {
+    cursor: pointer;
+    background: #3f3f3f;
+  }
+
+  &:active {
+    background: black;
+  }
 `;
 
 export default function SearchBox() {
