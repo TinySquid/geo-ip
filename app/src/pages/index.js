@@ -10,6 +10,7 @@ import Layout from "../components/Layout/Layout";
 import SearchBox from "../components/SearchBox/SearchBox";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import MapBox from "../components/MapBox/MapBox";
+import LiveMarker from "../components/MapBox/LiveMarker";
 
 import { daysBetween } from "../utility/dateRange";
 
@@ -213,7 +214,9 @@ export default function Home() {
             zoomControl: false,
             scrollWheelZoom: true,
           }}
-        ></MapBox>
+        >
+          <LiveMarker position={searchResult.coords} />
+        </MapBox>
       </Container>
     </Layout>
   );
