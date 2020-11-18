@@ -4,6 +4,7 @@ const errorHandler = (error, req, res, next) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
 
     res.status(statusCode).json({
+      success: false,
       message: error.message,
       stack: error.stack,
     });
@@ -11,6 +12,7 @@ const errorHandler = (error, req, res, next) => {
     // Show everything as a 404 in production
     // If this was a real app in production we'd have logging in place
     res.status(404).json({
+      success: false,
       message: "Not found",
     });
   }
