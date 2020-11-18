@@ -41,6 +41,11 @@ const PanelItem = styled.div`
 
   border-right: 1px solid #cccccc;
 
+  // When displaying ipv6 we need to manually tell browser to word-break
+  &:first-child {
+    word-break: break-all;
+  }
+
   &:last-child {
     border: none;
   }
