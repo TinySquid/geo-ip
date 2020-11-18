@@ -2,6 +2,8 @@
 
 # Geo-IP
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a57a4fb9-5d81-40cd-a52a-8ea6fea1daeb/deploy-status)](https://app.netlify.com/sites/ts-geo-ip/deploys)
+
 <!-- ## [Click here to view the app](#) -->
 
 A Gatsby PWA for finding the geographic location of an IP address. Built to look great on both desktop & mobile devices.
@@ -23,19 +25,18 @@ A Gatsby PWA for finding the geographic location of an IP address. Built to look
 
 ## Architecture
 
-Built into a PWA using Gatsby, with map rendering handled by LeafletJS and ip information coming from the ipify API. Styling and theming is implemented with styled-components.
-
-I chose Gatsby again on this challenge to continue gaining experience with it and I've picked styled-components because while I have used it before, I haven't touched the theming aspect of it.
+Built into a PWA using Gatsby, with map rendering handled by LeafletJS and ip information coming from the ipify API. Styling is implemented with styled-components. I followed the TDD approach and so far only modified tests when absolutely necessary. Tests were written using jest.
 
 ## Local Development
 
-After cloning the repository and installing the required dependencies via npm or yarn, you can run the following scripts from the project root directory:
+After cloning the repository make sure you cd into the `/app` directory before installing packages or running available scripts:
 
 - `yarn start` / `yarn develop` - Runs the project in development mode on a hot-reload server @ http://localhost:8000/
 - `yarn build` - Compiles the app for deployment
 - `yarn serve` - Runs the app in production mode for testing @ http://localhost:9000
 - `yarn clean` - Used to clear the cache / public dir when you encounter weird issues with the dev server
 - `yarn test` - Runs tests
+- `yarn format` - Runs prettier on the project
 
 <!-- ## Screenshots -->
 
