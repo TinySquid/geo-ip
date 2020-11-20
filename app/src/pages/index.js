@@ -56,21 +56,18 @@ export default function Home() {
       { header: "timezone", text: "UTC -05:00" },
       { header: "isp", text: "SpaceX Starlink" },
     ],
-    coords: [51.505, -0.09],
+    latlon: [51.505, -0.09],
   });
 
   async function getLocalIpAddress() {
-    /* Getting the client's IP is difficult. 
-      I've setup this environment variable so you can change it, but by default I'm using https://www.cloudflare.com/cdn-cgi/trace
-      The cloudflare endpoint returns a plain-text response and is subject to change at their will so a proxy backend would be better in this instance.
-    */
+    // Hits backend /ip endpoint to get our local ip
     return axios.get(`${process.env.GET_LOCAL_IP_ENDPOINT}`);
   }
 
-  async function getIpLocationData(localIp) {
-    // Retrieve ip location data
+  async function getIpLocationData(ipOrDomain) {
+    // Hits backend /location endpoint to get information about passed ip / domain
     return axios.get(
-      `${process.env.GET_IP_LOCATION_ENDPOINT}?apiKey=${process.env.IPIFY_API_KEY}&ipAddress=${localIp}`
+      `${process.env.GET_IP_LOCATION_ENDPOINT}?host=${ipOrDomain}`
     );
   }
 
@@ -90,42 +87,14 @@ export default function Home() {
   }
 
   function parseSearchResultFromAPI(data) {
-    // parse for InfoPanel component to render
-    /* Expected input to be object with keys:
-      {
-        ip,
-        location: {
-          region,
-          city,
-          lat,
-          lng,
-          postalCode,
-          timezone
-        },
-        isp
-      }
-    */
-
-    // Parse to format for info panel to use
-    const searchResult = {
-      // Used by InfoPanel
-      ip: data.ip,
-      location: `${data.location.city}, ${data.location.region} ${data.location.postalCode}`,
-      timezone: `UTC ${data.location.timezone}`,
-      isp: data.isp,
-
-      // Used by map
-      coords: [data.location.lat, data.location.lng],
-
-      // Used to decrease API usage
-      date: new Date().setHours(0, 0, 0, 0),
-    };
+    // Don't need req flag in our localstorage...
+    delete data.success;
 
     // Send to state
-    _searchResultHelper(searchResult);
+    _searchResultHelper(data);
 
     // Update cache since this is new data
-    updateSearchHistory(searchResult);
+    updateSearchHistory(data);
   }
 
   function parseSearchResultFromCache(cacheResult) {
@@ -142,7 +111,7 @@ export default function Home() {
         { header: "timezone", text: search.timezone },
         { header: "isp", text: search.isp },
       ],
-      coords: search.coords,
+      latlon: search.latlon,
     });
   }
 
@@ -153,8 +122,7 @@ export default function Home() {
       (async () => {
         const { data } = await getLocalIpAddress();
 
-        // Data comes back as plain-text so I parse by spliting & retrieving the ip by index before trimming the key off
-        setLocalIp(data.split("\n")[2].substring(3));
+        setLocalIp(data.req);
       })();
     }
   }, []);
@@ -183,7 +151,7 @@ export default function Home() {
           if (cachedResult.length > 0) {
             const today = new Date().setHours(0, 0, 0, 0);
 
-            if (daysBetween(new Date(cachedResult[0].date), today) < 7) {
+            if (daysBetween(new Date(cachedResult[0].timestamp), today) < 7) {
               parseSearchResultFromCache(cachedResult[0]);
             } else {
               (async () => {
@@ -209,13 +177,13 @@ export default function Home() {
         <MapBox
           options={{
             style: { height: "calc(100vh - 300px)", width: "100vw" },
-            center: searchResult.coords,
+            center: searchResult.latlon,
             zoom: 15,
             zoomControl: false,
             scrollWheelZoom: true,
           }}
         >
-          <LiveMarker position={searchResult.coords} />
+          <LiveMarker position={searchResult.latlon} />
         </MapBox>
       </Container>
     </Layout>
