@@ -61,13 +61,13 @@ export default function Home() {
 
   async function getLocalIpAddress() {
     // Hits backend /ip endpoint to get our local ip
-    return axios.get(`${process.env.GET_LOCAL_IP_ENDPOINT}`);
+    return axios.get(`${process.env.GATSBY_GET_LOCAL_IP_ENDPOINT}`);
   }
 
   async function getIpLocationData(ipOrDomain) {
     // Hits backend /location endpoint to get information about passed ip / domain
     return axios.get(
-      `${process.env.GET_IP_LOCATION_ENDPOINT}?host=${ipOrDomain}`
+      `${process.env.GATSBY_GET_IP_LOCATION_ENDPOINT}?host=${ipOrDomain}`
     );
   }
 
