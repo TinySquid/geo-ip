@@ -10,13 +10,13 @@ import mockAxios from "axios";
 import Home from "../index";
 
 beforeAll(() => {
-  // Component uses env vars so we mock those too
+  // Component uses env vars so we need to mock those too
   process.env = {
-    GET_LOCAL_IP_ENDPOINT: "local_ip_endpoint",
-    GET_IP_LOCATION_ENDPOINT: "location_endpoint",
+    GATSBY_GET_LOCAL_IP_ENDPOINT: "local_ip_endpoint",
+    GATSBY_GET_IP_LOCATION_ENDPOINT: "location_endpoint",
   };
 
-  // Mock for <Layout /> in page
+  // Mock for <Layout /> in page component
   useStaticQuery.mockImplementation(() => {
     return {
       site: {
@@ -30,7 +30,7 @@ beforeAll(() => {
   mockAxios.get.mockImplementation((url) => {
     switch (url) {
       // First async api call mock response
-      case process.env.GET_LOCAL_IP_ENDPOINT:
+      case process.env.GATSBY_GET_LOCAL_IP_ENDPOINT:
         return Promise.resolve({
           data: {
             req: "8.8.8.8",
@@ -38,7 +38,7 @@ beforeAll(() => {
         });
 
       // Second call mock response uses ip from first as url
-      case `${process.env.GET_IP_LOCATION_ENDPOINT}?host=8.8.8.8`:
+      case `${process.env.GATSBY_GET_IP_LOCATION_ENDPOINT}?host=8.8.8.8`:
         return Promise.resolve({
           data: {
             success: true,
