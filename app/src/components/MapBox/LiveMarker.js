@@ -11,7 +11,7 @@ export default function LiveMarker({ position }) {
     if (map && position) {
       map.setView(position, map.getZoom());
     }
-  }, [position]);
+  }, [map, position]);
 
   return position === null ? null : (
     <Marker position={position}>
