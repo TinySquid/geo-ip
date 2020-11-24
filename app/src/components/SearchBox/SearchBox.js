@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, { useState } from "react";
 
 // SC
 import styled from "styled-components";
@@ -65,14 +65,29 @@ const SearchButton = styled.button`
   }
 `;
 
-export default function SearchBox({ initialValue }) {
+export default function SearchBox({ initialValue, search }) {
+  const [searchValue, setSearchValue] = useState(initialValue || "");
+
+  function handleSearch() {
+    if (searchValue !== "") {
+      search(searchValue);
+    }
+  }
+
+  function handleInputUpdate(e) {
+    setSearchValue(e.target.value);
+  }
+
   return (
     <SearchContainer>
       <SearchInput
         placeholder="Search for any IP address or domain"
-        defaultValue={initialValue ? initialValue : ""}
+        value={searchValue}
+        onChange={handleInputUpdate}
       />
-      <SearchButton aria-label="Submit">{">"}</SearchButton>
+      <SearchButton aria-label="Submit" onClick={handleSearch}>
+        {">"}
+      </SearchButton>
     </SearchContainer>
   );
 }

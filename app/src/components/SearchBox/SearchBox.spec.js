@@ -1,6 +1,6 @@
 // React
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 
 // Components
 import SearchBox from "./SearchBox";
@@ -16,5 +16,16 @@ describe("SearchBox", () => {
     render(<SearchBox />);
 
     expect(screen.getByLabelText("Submit")).toBeDefined();
+  });
+
+  it(`Calls function with field value on submit`, () => {
+    const mockIp = "8.8.8.8";
+    const searchMock = jest.fn();
+
+    render(<SearchBox initialValue={mockIp} search={searchMock} />);
+
+    fireEvent.click(screen.getByLabelText("Submit"));
+
+    expect(searchMock).toHaveBeenCalledWith(mockIp);
   });
 });
