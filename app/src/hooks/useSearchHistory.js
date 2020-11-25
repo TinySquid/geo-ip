@@ -6,8 +6,11 @@ export function useSearchHistory(initialValue) {
     Using 'cache' as the item key. Any changes are sync'd with browser localstorage.
   */
 
+  //* Gatsby fix - window object not available during build-time
   const [state, setState] = useState(
-    JSON.parse(localStorage.getItem("cache")) || initialValue
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("cache")) || initialValue
+      : []
   );
 
   useEffect(() => {
