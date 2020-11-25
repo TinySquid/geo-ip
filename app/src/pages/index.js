@@ -7,6 +7,7 @@ import axios from "axios";
 import Layout from "../components/Layout/Layout";
 
 // Components
+import { BeatLoader } from "react-spinners";
 import SearchBox from "../components/SearchBox/SearchBox";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import MapBox from "../components/MapBox/MapBox";
@@ -104,7 +105,19 @@ export default function Home() {
     });
   }, [search]);
 
-  if (!state.searchIp) return null;
+  if (!state.searchIp)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <BeatLoader color={"#0E71E4"} size={20} margin={6} />
+      </div>
+    );
 
   return (
     <Layout>
