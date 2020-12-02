@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 // Global Layout
 import Layout from "../components/Layout/Layout";
@@ -54,6 +54,7 @@ export default function Home() {
   const search = useSearch();
 
   const [state, setState] = useState({
+    hasSearchedLocalIp: false,
     searchIp: null,
     searchResult: {
       data: [
@@ -66,18 +67,28 @@ export default function Home() {
     },
   });
 
-  //* We get local ip location on page load
-  useEffect(() => {
-    if (localIp) {
-      search(localIp)
+  const searchWithUpdate = useCallback(
+    (ip) => {
+      // Combines search result with UI state updating
+      search(ip)
         .then((data) => {
-          setState(data);
+          setState((prevState) => ({ ...prevState, ...data }));
         })
         .catch((error) => {
           console.log("Could not get local ip information", error);
         });
+    },
+    [search]
+  );
+
+  //* We get local ip location on page load
+  useEffect(() => {
+    if (localIp && !state.hasSearchedLocalIp) {
+      searchWithUpdate(localIp);
+
+      setState((prevState) => ({ ...prevState, hasSearchedLocalIp: true }));
     }
-  }, [localIp, search]);
+  }, [localIp, searchWithUpdate]);
 
   if (!state.searchIp)
     return (
@@ -98,7 +109,7 @@ export default function Home() {
       <Container>
         <Header>
           <Title>IP Address Locator</Title>
-          <SearchBox initialValue={state.searchIp} search={search} />
+          <SearchBox initialValue={state.searchIp} search={searchWithUpdate} />
           <InfoPanel data={state.searchResult.data} />
         </Header>
         <MapBox
