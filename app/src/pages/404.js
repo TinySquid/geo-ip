@@ -1,9 +1,7 @@
-import React from "react";
-
 export default function error404() {
-  return (
-    <div>
-      <p>404</p>
-    </div>
-  );
+  if (typeof window !== "undefined") {
+    window.location.replace(process.env.GATSBY_APP_HREF);
+  }
+
+  return null;
 }
