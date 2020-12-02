@@ -88,7 +88,7 @@ export default function Home() {
 
       setState((prevState) => ({ ...prevState, hasSearchedLocalIp: true }));
     }
-  }, [localIp, searchWithUpdate]);
+  }, [localIp, state.hasSearchedLocalIp, searchWithUpdate]);
 
   if (!state.searchIp)
     return (
