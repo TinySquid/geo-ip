@@ -4,7 +4,7 @@ import React, { useState } from "react";
 // SC
 import styled from "styled-components";
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -68,7 +68,9 @@ const SearchButton = styled.button`
 export default function SearchBox({ initialValue, search }) {
   const [searchValue, setSearchValue] = useState(initialValue || "");
 
-  function handleSearch() {
+  function handleSearch(e) {
+    e.preventDefault();
+
     if (searchValue !== "") {
       search(searchValue);
     }
