@@ -27,12 +27,14 @@ beforeAll(() => {
     };
   });
 
+  // Mock API responses
   mockAxios.get.mockImplementation((url) => {
     switch (url) {
       // First async api call mock response
       case process.env.GATSBY_GET_LOCAL_IP_ENDPOINT:
         return Promise.resolve({
           data: {
+            success: true,
             req: "8.8.8.8",
           },
         });
@@ -52,7 +54,7 @@ beforeAll(() => {
         });
 
       default:
-        return Promise.reject(new Error("NO MATCHING URL MOCK"));
+        return Promise.reject(new Error("NO MATCHING URL MOCK FOR:", url));
     }
   });
 });
