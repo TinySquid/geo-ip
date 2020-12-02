@@ -38,8 +38,9 @@ If you want to get this up and running yourself, you first need to know the envi
 
 ```
 # FRONTEND ENV VARS
-GET_LOCAL_IP_ENDPOINT="https://<your backend api>.herokuapp.com/ip"
-GET_IP_LOCATION_ENDPOINT="https://<your backend api>.herokuapp.com/location"
+GATSBY_APP_HREF="<localhost or front end deployment link>"
+GATSBY_GET_LOCAL_IP_ENDPOINT="https://<your backend api>.herokuapp.com/ip"
+GATSBY_GET_IP_LOCATION_ENDPOINT="https://<your backend api>.herokuapp.com/location"
 
 
 # BACKEND ENV VARS
@@ -51,7 +52,7 @@ IPGEO_API_KEY="<YOUR API KEY>"
 IP_LOCATION_ENDPOINT="https://api.ipgeolocation.io/ipgeo"
 ```
 
-Basically make sure you point your frontend env vars to your backend API wherever it's hosted. Also of importance is the `CORS_ORIGIN` variable, that will need to be set to where your frontend is hosted, that way only your app can use the api.
+Basically make sure you point your frontend env vars to your backend API wherever it's hosted. Note that Gatsby uses a `.env.development` & `.env.production` file so you can alter the values based on develop/build setting. Also of importance is the `CORS_ORIGIN` variable, that will need to be set to where your frontend is hosted, that way only your app can use the api.
 
 After cloning the repository make sure you cd into and run the package manager of your choice inside `/app` and `/backend`. Also verify you have setup the correct `.env` files for each with the proper values set.
 
