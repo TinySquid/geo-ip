@@ -18,16 +18,19 @@ export function useSearchHistory(initialValue) {
     _updateLocalStorage(state);
   }, [state]);
 
-  const findItem = useCallback((ip) => {
-    // Will return a search result if found, or null
-    const result = state.filter((item) => item.ip === ip);
+  const findItem = useCallback(
+    (ip) => {
+      // Will return a search result if found, or null
+      const result = state.filter((item) => item.ip === ip);
 
-    if (result.length > 0) {
-      return result[0];
-    }
+      if (result.length > 0) {
+        return result[0];
+      }
 
-    return null;
-  }, []);
+      return null;
+    },
+    [state]
+  );
 
   const addItem = useCallback((item) => {
     setState((prevState) => [...prevState, item]);
