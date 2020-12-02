@@ -3,7 +3,7 @@
 # Geo-IP
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a57a4fb9-5d81-40cd-a52a-8ea6fea1daeb/deploy-status)](https://app.netlify.com/sites/ts-geo-ip/deploys)
-![Code coverage from jest](https://img.shields.io/badge/coverage-92%25-green)
+![Code coverage from jest](https://img.shields.io/badge/coverage-87%25-green)
 
 ## [Click here to view the app](https://ts-geo-ip.netlify.app/)
 
