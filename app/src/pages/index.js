@@ -18,7 +18,7 @@ import { useSearchHistory } from "../hooks/useSearchHistory";
 
 // Utils
 import { daysBetween } from "../utility/dateRange";
-import { parseFromSearchHistory } from "../utility/parse";
+import { parseFromSearchHistory, parseFromAPI } from "../utility/parse";
 
 // SC
 import styled from "styled-components";
@@ -58,29 +58,6 @@ export default function Home() {
     []
   );
 
-  const search = useCallback(
-    (ip) => {
-      // Will show ip location from cache or API if cache outdated or not found
-      const searchItem = findSearchItem(ip);
-
-      if (searchItem) {
-        // Verify date
-        const today = new Date().setHours(0, 0, 0, 0);
-
-        if (daysBetween(new Date(searchItem.timestamp), today) < 7) {
-          // Use existing location information from history
-          const result = parseFromSearchHistory(searchItem);
-
-          setState({ searchIp: ip, searchResult: result });
-        } else {
-          // Get fresh location information
-          console.log("Need API data");
-        }
-      }
-    },
-    [findSearchItem]
-  );
-
   const [state, setState] = useState({
     searchIp: null,
     searchResult: {
@@ -94,15 +71,74 @@ export default function Home() {
     },
   });
 
+  const search = useCallback(
+    async (ip) => {
+      let data = {}; // Returned object with keys 'searchIp' & 'searchResult'
+
+      const searchItem = findSearchItem(ip);
+
+      if (searchItem) {
+        // Verify date
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        if (daysBetween(new Date(searchItem.timestamp), today) < 7) {
+          // Use existing location information from history
+          const result = parseFromSearchHistory(searchItem);
+
+          data = { searchIp: ip, searchResult: result };
+        } else {
+          // Search is stale, retrieve from API
+          axios
+            .get(`${process.env.GATSBY_GET_IP_LOCATION_ENDPOINT}?host=${ip}`)
+            .then((response) => {
+              const result = parseFromAPI(response.data);
+
+              // Add new search, delete old
+              addSearchItem(result.storageObject);
+
+              deleteSearchItem(searchItem.timestamp);
+
+              data = { searchIp: ip, searchResult: result.pageObject };
+            });
+        }
+      } else {
+        // Search doesn't exist, retrieve from API
+        axios
+          .get(`${process.env.GATSBY_GET_IP_LOCATION_ENDPOINT}?host=${ip}`)
+          .then((response) => {
+            const result = parseFromAPI(response.data);
+
+            addSearchItem(result.storageObject);
+
+            data = { searchIp: ip, searchResult: result.pageObject };
+          });
+      }
+
+      return Promise.resolve(data);
+    },
+    [findSearchItem, addSearchItem, deleteSearchItem]
+  );
+
   useEffect(() => {
     // Will get our local IP on initial page visit
-    axios.get(`${process.env.GATSBY_GET_LOCAL_IP_ENDPOINT}`).then((res) => {
-      const { data } = res;
+    axios
+      .get(`${process.env.GATSBY_GET_LOCAL_IP_ENDPOINT}`)
+      .then((res) => {
+        const { data } = res;
 
-      if (data.success) {
-        search(data.req);
-      }
-    });
+        if (data.success) {
+          search(data.req)
+            .then((result) => {
+              setState(result);
+            })
+            .catch((error) => {
+              console.log("Could not get location information", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("Could not get local IP", error);
+      });
   }, [search]);
 
   if (!state.searchIp)
@@ -124,7 +160,7 @@ export default function Home() {
       <Container>
         <Header>
           <Title>IP Address Locator</Title>
-          <SearchBox initialValue={state.searchIp} />
+          <SearchBox initialValue={state.searchIp} search={search} />
           <InfoPanel data={state.searchResult.data} />
         </Header>
         <MapBox
