@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@csstools/normalize.css": "^11.0.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.11.1",
     "gatsby": "^2.24.79",
     "gatsby-plugin-react-helmet": "^3.3.14",
